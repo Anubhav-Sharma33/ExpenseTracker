@@ -9,7 +9,22 @@ userRouter.get('/signIn',signIn)
 userRouter.post('/signUp',createUser);
 
 userRouter.use(authMiddleWare);
-userRouter.get('/expenses',(req,res)=>{
-    res.status(200).json({message:"Getting Expenses"});
-})
+
+// Impelement expense route
+
+userRouter.get('/allExpenses',(req,res)=>{
+    res.status(200).json({message:`${req.userEmail} ${req.objectId}`})
+});
+
+userRouter.post('/addExpense');
+
+userRouter.patch('/expense/:id');
+
+userRouter.delete('/expense/:id');
+
+
+//Add get route for getting expenses
+//Add post route for adding expenses
+//Add patch route for updating expenses
+//Add delete route from deleting expense
 

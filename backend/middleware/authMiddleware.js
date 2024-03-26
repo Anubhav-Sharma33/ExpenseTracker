@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { User } from "../model/userSchema.js";
 
 export async function authMiddleWare(req,res,next){
     // Logic for validation
@@ -10,7 +11,10 @@ export async function authMiddleWare(req,res,next){
         if(!token){
             res.status(400).json({message:"Token not found"});
         }else{
-            await jwt.verify(token,process.env.Secret_Key); 
+            const response = await jwt.verify(token,process.env.Secret_Key); 
+            const data = await User.find({email:response.email}).exec();; 
+            req.userEmail  = data[0].email;
+            req.objectId = data[0]._id;
             next();
         }
     }catch(error){
