@@ -12,9 +12,7 @@ export async function authMiddleWare(req,res,next){
             res.status(400).json({message:"Token not found"});
         }else{
             const response = await jwt.verify(token,process.env.Secret_Key); 
-            const data = await User.find({email:response.email}).exec();; 
-            req.userEmail  = data[0].email;
-            req.objectId = data[0]._id;
+            const data = await User.find({email:response.email}).exec();
             next();
         }
     }catch(error){
